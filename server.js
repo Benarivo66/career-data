@@ -30,7 +30,7 @@ app.use("/careers", careersRoute)
 
 const host = process.env.HOST;
 
-app.listen(process.env.HOST, () => {
+app.listen(process.env.PORT, () => {
   console.log(`app listening on ${host}`);
   db.init();
 });
