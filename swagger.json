@@ -73,6 +73,41 @@
       },
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "dob": {
+                  "example": "any"
+                },
+                "country": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "sex": {
+                  "example": "any"
+                },
+                "phone": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -218,10 +253,28 @@
         "description": "",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                },
+                "education": {
+                  "example": "any"
+                },
+                "skills": {
+                  "example": "any"
+                },
+                "isEmployed": {
+                  "example": "any"
+                },
+                "company": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -286,3 +339,5 @@
     }
   }
 }
+
+
