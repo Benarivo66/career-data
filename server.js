@@ -30,7 +30,7 @@ app.use("/careers", careersRoute)
 
 const host = process.env.HOST;
 
-app.listen("8080", () => {
+app.listen(process.env.HOST, () => {
   console.log(`app listening on ${host}`);
   db.init();
 });
