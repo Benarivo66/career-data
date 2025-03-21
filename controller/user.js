@@ -36,6 +36,19 @@ const createUser = async (req, res) => {
   }
 };
 
+/**
+ * Update a user by ID.
+ * @param {object} req - Request object.
+ * @param {object} res - Response object.
+ * @route PUT /users/{id}
+ * @param {string} id - User ID.
+ * @bodyParam {object} updates - Fields to update.
+ * @returns {object} 200 - Success message with updated user data.
+ * @returns {object} 400 - Error if no fields are provided.
+ * @returns {object} 404 - Error if user is not found.
+ * @returns {object} 500 - Internal Server Error.
+ */
+
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;

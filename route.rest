@@ -1,0 +1,9 @@
+GET http://localhost:8080/users # the request above returns a json object with all the users available in the database
+
+GET http://localhost:8080/users/:id # the request above returns a json object with a single user whose id is specified
+
+POST http://localhost:8080/users/ # the request creates a new user by filling the following fields: firstName, lastName, email, dob, country, email, sex, phone and password and returns a json object
+
+PUT http://localhost:8080/users/:id # the request updates a user whose id is specified by filling one or more of the following: firstName, lastName, email, dob, country, email, sex, phone; and returns a json object
+
+DELETE http://localhost:8080/users/:id # the request deletes a user whose id is specified and returns a json object

@@ -73,41 +73,6 @@
       },
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "dob": {
-                  "example": "any"
-                },
-                "country": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "sex": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -122,31 +87,62 @@
       }
     },
     "/users/{id}": {
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+  "put": {
+    "description": "Update a user by ID",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "type": "string",
+        "description": "The ID of the user to update"
+      },
+      {
+        "name": "body",
+        "in": "body",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string",
+              "example": "John"
+            },
+            "lastName": {
+              "type": "string",
+              "example": "Doe"
+            },
+            "email": {
+              "type": "string",
+              "example": "john.doe@example.com"
+            },
+            "phone": {
+              "type": "string",
+              "example": "1234567890"
+            },
+            "country": {
+              "type": "string",
+              "example": "South Africa"
+            }
           }
         }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "User updated successfully"
       },
+      "400": {
+        "description": "Bad Request - Invalid input or missing fields"
+      },
+      "404": {
+        "description": "User not found"
+      },
+      "500": {
+        "description": "Internal Server Error"
+      }
+    }
+  },
       "get": {
         "description": "",
         "parameters": [
@@ -249,49 +245,66 @@
       }
     },
     "/careers/{id}": {
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "example": "any"
-                },
-                "education": {
-                  "example": "any"
-                },
-                "skills": {
-                  "example": "any"
-                },
-                "isEmployed": {
-                  "example": "any"
-                },
-                "company": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
+  "put": {
+    "description": "Update a career entry by ID",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "type": "string",
+        "description": "The ID of the career entry to update"
       },
+      {
+        "name": "body",
+        "in": "body",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "example": "123456789"
+            },
+            "education": {
+              "type": "string",
+              "example": "Bachelor's Degree in Computer Science"
+            },
+            "skills": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "example": ["JavaScript", "Node.js", "MongoDB"]
+            },
+            "isEmployed": {
+              "type": "boolean",
+              "example": true
+            },
+            "company": {
+              "type": "string",
+              "example": "Tech Corp"
+            }
+          },
+          "required": ["userId"]
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Career entry updated successfully"
+      },
+      "400": {
+        "description": "Bad Request - Invalid input or missing fields"
+      },
+      "404": {
+        "description": "Career entry not found"
+      },
+      "500": {
+        "description": "Internal Server Error"
+      }
+    }
+  },
       "get": {
         "description": "",
         "parameters": [
@@ -337,7 +350,32 @@
         }
       }
     }
+  },
+  "definitions": {
+    "UserUpdate": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "John"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "john.doe@example.com"
+        },
+        "phone": {
+          "type": "string",
+          "example": "1234567890"
+        },
+        "country": {
+          "type": "string",
+          "example": "Ukraine"
+        }
+      }
+    }
   }
 }
-
-
