@@ -6,10 +6,20 @@
     "version": "1.0.0"
   },
   "basePath": "/",
-  "schemes": [
-    "https",
-    "http"
-  ],
+  "schemes": ["https", "http"],
+  "securityDefinitions": {
+  "CookieAuth": {
+    "type": "apiKey",
+    "in": "header",
+    "name": "Cookie",
+    "description": "Session authentication using the 'connect.sid' cookie. Obtain it from your browser after logging in via Google."
+  }
+},
+"security": [
+  {
+    "CookieAuth": []
+  }
+],
   "paths": {
     "/": {
       "get": {
@@ -17,6 +27,31 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "get": {
+        "summary": "Authenticate with Google",
+        "description": "Redirects to Google OAuth login page.",
+        "responses": {
+          "302": {
+            "description": "Redirect to Google OAuth"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "summary": "Logout",
+        "description": "Logs out the user and destroys the session.",
+        "responses": {
+          "200": {
+            "description": "Logged out successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -31,120 +66,39 @@
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "dob": {
-                  "example": "any"
-                },
-                "country": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "sex": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                }
+                "firstName": { "example": "any" },
+                "lastName": { "example": "any" },
+                "password": { "example": "any" },
+                "dob": { "example": "any" },
+                "country": { "example": "any" },
+                "email": { "example": "any" },
+                "sex": { "example": "any" },
+                "phone": { "example": "any" }
               }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "get": {
-        "description": "",
+        "description": "Retrieve all users",
+        "security": [{ "CookieAuth": [] }],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "401": { "description": "Unauthorized - Login required" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
     "/users/{id}": {
-  "put": {
-    "description": "Update a user by ID",
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "type": "string",
-        "description": "The ID of the user to update"
-      },
-      {
-        "name": "body",
-        "in": "body",
-        "required": true,
-        "schema": {
-          "type": "object",
-          "properties": {
-            "firstName": {
-              "type": "string",
-              "example": "John"
-            },
-            "lastName": {
-              "type": "string",
-              "example": "Doe"
-            },
-            "email": {
-              "type": "string",
-              "example": "john.doe@example.com"
-            },
-            "phone": {
-              "type": "string",
-              "example": "1234567890"
-            },
-            "country": {
-              "type": "string",
-              "example": "South Africa"
-            }
-          }
-        }
-      }
-    ],
-    "responses": {
-      "200": {
-        "description": "User updated successfully"
-      },
-      "400": {
-        "description": "Bad Request - Invalid input or missing fields"
-      },
-      "404": {
-        "description": "User not found"
-      },
-      "500": {
-        "description": "Internal Server Error"
-      }
-    }
-  },
       "get": {
-        "description": "",
+        "description": "Retrieve a user by ID",
+        "security": [{ "CookieAuth": [] }],
         "parameters": [
           {
             "name": "id",
@@ -154,19 +108,47 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "200": { "description": "OK" },
+          "401": { "description": "Unauthorized - Login required" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "put": {
+        "description": "Update a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the user to update"
           },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": { "type": "string", "example": "John" },
+                "lastName": { "type": "string", "example": "Doe" },
+                "email": { "type": "string", "example": "john.doe@example.com" },
+                "phone": { "type": "string", "example": "1234567890" },
+                "country": { "type": "string", "example": "South Africa" }
+              }
+            }
           }
+        ],
+        "responses": {
+          "200": { "description": "User updated successfully" },
+          "400": { "description": "Bad Request - Invalid input or missing fields" },
+          "404": { "description": "User not found" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete a user by ID",
         "parameters": [
           {
             "name": "id",
@@ -176,15 +158,9 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
@@ -347,33 +323,6 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "UserUpdate": {
-      "type": "object",
-      "properties": {
-        "firstName": {
-          "type": "string",
-          "example": "John"
-        },
-        "lastName": {
-          "type": "string",
-          "example": "Doe"
-        },
-        "email": {
-          "type": "string",
-          "example": "john.doe@example.com"
-        },
-        "phone": {
-          "type": "string",
-          "example": "1234567890"
-        },
-        "country": {
-          "type": "string",
-          "example": "Ukraine"
         }
       }
     }
