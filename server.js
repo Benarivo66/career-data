@@ -25,12 +25,7 @@ app.use(
   session({
     secret: process.env.SECRET_KEY,
     resave: false,
-    saveUninitialized: true,
-    cookie: {
-      secure: process.env.NODE_ENV === "production", 
-      httpOnly: true, 
-      sameSite: "lax", 
-    },
+    saveUninitialized: true
   })
 );
 
@@ -41,7 +36,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://career-data-te13.onrender.com/auth/google/callback",
+      callbackURL: "/auth/google/callback",
     },
     (accessToken, refreshToken, profile, done) => {
       return done(null, profile);
